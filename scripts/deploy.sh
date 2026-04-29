@@ -1,13 +1,9 @@
 #!/bin/bash
 
-cd /home/ubuntu/app
+cd /var/www/html
 
-echo "Installing dependencies..."
 npm install
 
-echo "Restarting PM2 app..."
-pm2 stop my-app || true
-pm2 delete my-app || true
-pm2 start index.js --name my-app
+pm2 restart all || pm2 start app.js
 
-pm2 save
+sudo systemctl restart apache2
