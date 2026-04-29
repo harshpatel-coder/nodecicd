@@ -6,6 +6,11 @@ files:
     destination: /var/www/html
 
 hooks:
+  BeforeInstall:
+    - location: scripts/before.sh
+      timeout: 300
+      runas: ubuntu
+
   AfterInstall:
     - location: scripts/deploy.sh
       timeout: 300
