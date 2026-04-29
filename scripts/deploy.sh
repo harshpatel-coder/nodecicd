@@ -2,20 +2,19 @@
 
 echo "🚀 Deployment started..."
 
-# Fix permission
-sudo chown -R ubuntu:ubuntu /var/www/html
-
 cd /var/www/html || exit
 
 echo "📦 Installing dependencies..."
 npm install --unsafe-perm
 
-echo "🛑 Stopping old app..."
-pm2 stop test-app || true
-pm2 delete test-app || true
+echo "🚀 Restarting app..."
 
-echo "🚀 Starting app..."
-pm2 start index.js --name test-app
+pm2 describe test-app > /dev/null
+if [ $? -eq 0 ]; then
+  pm2 restart test-app
+else
+  pm2 start index.js --name test-app
+fi
 
 pm2 save
 
