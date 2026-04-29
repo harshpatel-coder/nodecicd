@@ -2,26 +2,17 @@
 
 echo "🚀 Deployment started..."
 
-# Go to app directory
+sudo chown -R ubuntu:ubuntu /var/www/html
+
 cd /var/www/html || exit
 
-echo "📦 Installing dependencies..."
-npm install --production
+npm install
 
-echo "🛑 Stopping old app..."
-pm2 stop node-hello || true
-pm2 delete node-hello || true
+pm2 stop test-app || true
+pm2 delete test-app || true
 
-echo "🧹 Cleaning old logs..."
-pm2 flush
+pm2 start index.js --name test-app
 
-echo "🚀 Starting app..."
-pm2 start index.js --name node
-
-echo "💾 Saving pm2 process..."
 pm2 save
 
-echo "🔁 Restarting pm2 startup (optional)"
-pm2 startup systemd -u ubuntu --hp /home/ubuntu
-
-echo "✅ Deployment finished successfully!"
+echo "✅ Deployment done"
