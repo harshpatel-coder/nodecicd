@@ -4,6 +4,14 @@ os: linux
 files:
   - source: /
     destination: /var/www/html
+    overwrite: true
+
+permissions:
+  - object: /var/www/html
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+    mode: 755
 
 hooks:
   AfterInstall:
