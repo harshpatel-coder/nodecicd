@@ -2,20 +2,26 @@
 
 echo "🚀 Deployment started..."
 
+# Go to app directory
 cd /var/www/html || exit
 
+# Fix permissions
+sudo chown -R ubuntu:ubuntu /var/www/html
+
+# Install dependencies
 echo "📦 Installing dependencies..."
-npm install --unsafe-perm
+npm install -f
 
-echo "🚀 Restarting app..."
+# Stop old app
+echo "🛑 Stopping old app..."
+pm2 stop test-app || true
+pm2 delete test-app || true
 
-pm2 describe test-app > /dev/null
-if [ $? -eq 0 ]; then
-  pm2 restart test-app
-else
-  pm2 start index.js --name test-app
-fi
+# Start new app
+echo "🚀 Starting app..."
+pm2 start index.js --name test-app
 
+# Save PM2 process
 pm2 save
 
-echo "✅ Deployment done"
+echo "✅ Deployment completed successfully!"
