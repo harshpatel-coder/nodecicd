@@ -2,26 +2,23 @@
 
 echo "🚀 Deployment started..."
 
-# Go to app directory
 cd /var/www/html || exit
 
-# Fix permissions
+# FIX permissions (IMPORTANT)
 sudo chown -R ubuntu:ubuntu /var/www/html
 
-# Install dependencies
-echo "📦 Installing dependencies..."
-npm install -f
+# Clean install
+rm -rf node_modules
+rm -f package-lock.json
+
+npm install --unsafe-perm
 
 # Stop old app
-echo "🛑 Stopping old app..."
-pm2 stop test-app || true
 pm2 delete test-app || true
 
-# Start new app
-echo "🚀 Starting app..."
+# Start fresh
 pm2 start index.js --name test-app
 
-# Save PM2 process
 pm2 save
 
-echo "✅ Deployment completed successfully!"
+echo "✅ Deployment completed"
