@@ -1,23 +1,23 @@
 version: 0.0
 os: linux
- 
+
 files:
   - source: /
-    destination: /var/www/html
- 
+    destination: /var/www/html/nodeapp
+
 permissions:
-  - object: /var/www/html
+  - object: /var/www/html/nodeapp
     pattern: "**"
     owner: ubuntu
     group: ubuntu
     mode: 755
- 
+
 hooks:
   AfterInstall:
     - location: scripts/install.sh
       timeout: 300
       runas: ubuntu
- 
+
   ApplicationStart:
     - location: scripts/start.sh
       timeout: 300
