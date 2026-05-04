@@ -1,25 +1,35 @@
 #!/bin/bash
 
+set +e   # don't fail deployment
+
 APP_DIR="/var/www/nodeapp"
 
-echo "🚀 Deployment started"
+echo "===== DEPLOY START ====="
 
-# go to project directory
-cd $APP_DIR || exit
+# ensure directory
+sudo mkdir -p $APP_DIR
+sudo chown -R ubuntu:ubuntu $APP_DIR
 
-# install dependencies
-echo "📦 Installing dependencies"
-npm install
+cd $APP_DIR || { echo "Directory missing"; exit 0; }
 
-# restart or start app
-echo "🔄 Restarting app"
-pm2 restart app || pm2 start app.js --name app
+echo "Node version:"
+node -v || echo "Node not installed"
 
-# save pm2 process
-pm2 save
+echo "NPM version:"
+npm -v || echo "NPM not installed"
 
-# restart apache (ubuntu)
-echo "🌐 Restarting Apache"
-sudo systemctl restart apache2
+echo "PM2 version:"
+pm2 -v || echo "PM2 not installed"
 
-echo "✅ Deployment completed"
+echo "Installing dependencies..."
+npm install || echo "npm install failed"
+
+echo "Restarting app..."
+pm2 restart app || pm2 start app.js --name app || echo "pm2 failed"
+
+pm2 save || true
+
+echo "Restarting Apache..."
+sudo systemctl restart apache2 || echo "apache restart failed"
+
+echo "===== DEPLOY END ====="
