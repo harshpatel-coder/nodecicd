@@ -1,13 +1,7 @@
 #!/bin/bash
 set -e
- 
-cd /var/www/html
- 
-# optional cleanup (safe)
-rm -rf node_modules
- 
-# check files exist
-ls -la
- 
-# install dependencies
+
+cd /var/www/html/nodeapp
+
+echo "Installing dependencies..."
 npm install
