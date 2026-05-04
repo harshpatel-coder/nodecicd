@@ -2,19 +2,16 @@ version: 0.0
 os: linux
 
 files:
-  - source: build/
-    destination: /var/www/html/react
-    overwrite: true
-
-permissions:
-  - object: /var/www/html/react
-    pattern: "**"
-    owner: ubuntu
-    group: ubuntu
-    mode: 755
+  - source: /
+    destination: /var/www/html/nodeapp
 
 hooks:
   AfterInstall:
-    - location: scripts/deploy.sh
+    - location: deploy.sh
+      timeout: 300
+      runas: ubuntu
+
+  ApplicationStart:
+    - location: deploy.sh
       timeout: 300
       runas: ubuntu
