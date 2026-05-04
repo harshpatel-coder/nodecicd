@@ -1,8 +1,6 @@
 #!/bin/bash
 
-APP_DIR="/var/www/html/nodeapp"
-
-cd $APP_DIR
+cd /var/www/html/nodeapp
 
 npm install
 
