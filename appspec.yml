@@ -2,8 +2,16 @@ version: 0.0
 os: linux
 
 files:
-  - source: /
-    destination: /var/www/html
+  - source: build/
+    destination: /var/www/html/react
+    overwrite: true
+
+permissions:
+  - object: /var/www/html/react
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+    mode: 755
 
 hooks:
   AfterInstall:
