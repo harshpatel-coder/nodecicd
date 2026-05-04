@@ -1,24 +1,17 @@
 #!/bin/bash
 
-echo "🚀 Deployment started..."
+echo "🚀 React Deployment started..."
 
-cd /var/www/html || exit
+# Ensure folder exists
+sudo mkdir -p /var/www/html/react
 
-# FIX permissions (IMPORTANT)
-sudo chown -R ubuntu:ubuntu /var/www/html
+# Fix permissions
+sudo chown -R ubuntu:ubuntu /var/www/html/react
 
-# Clean install
-rm -rf node_modules
-rm -f package-lock.json
+echo "🧹 Cleaning old files..."
+rm -rf /var/www/html/react/*
 
-npm install --unsafe-perm
+echo "📦 Copying new build files..."
+cp -r build/* /var/www/html/react/
 
-# Stop old app
-pm2 delete test-app || true
-
-# Start fresh
-pm2 start index.js --name test-app
-
-pm2 save
-
-echo "✅ Deployment completed"
+echo "✅ React deployed successfully!"
