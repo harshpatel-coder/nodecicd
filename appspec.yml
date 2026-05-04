@@ -5,12 +5,6 @@ files:
   - source: /
     destination: /var/www/html/nodeapp
 
-permissions:
-  - object: /var/www/html/nodeapp
-    pattern: "**"
-    owner: ubuntu
-    group: www-data
-
 hooks:
   AfterInstall:
     - location: deploy.sh
