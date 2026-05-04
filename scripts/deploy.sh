@@ -2,7 +2,7 @@
 
 set +e   # don't fail deployment
 
-APP_DIR="/var/www/nodeapp"
+APP_DIR="/var/www/html/nodeapp"
 
 echo "===== DEPLOY START ====="
 
