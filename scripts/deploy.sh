@@ -1,10 +1,13 @@
 #!/bin/bash
 
-cd /var/www/html/nodeapp
+cd /var/www/html/nodeapp || exit
 
 npm install
 
-pm2 restart app || pm2 start app.js --name app
+pm2 delete app || true
+
+# use package.json start (recommended)
+pm2 start npm --name app -- start
 
 pm2 save
 
