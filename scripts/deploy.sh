@@ -1,17 +1,11 @@
 #!/bin/bash
 
-echo "🚀 React Deployment started..."
+cd /var/www/nodeapp
 
-# Ensure folder exists
-sudo mkdir -p /var/www/html/react
+npm install
 
-# Fix permissions
-sudo chown -R ubuntu:ubuntu /var/www/html/react
+pm2 restart app || pm2 start app.js --name app
 
-echo "🧹 Cleaning old files..."
-rm -rf /var/www/html/react/*
+pm2 save
 
-echo "📦 Copying new build files..."
-cp -r build/* /var/www/html/react/
-
-echo "✅ React deployed successfully!"
+sudo systemctl restart apache2
