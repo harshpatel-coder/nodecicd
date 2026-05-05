@@ -1,18 +1,26 @@
 version: 0.0
 os: linux
-
+ 
 files:
-  - source: /build
+  - source: /
     destination: /var/www/html
 
 file_exists_behavior: OVERWRITE
 
+ 
+permissions:
+  - object: /var/www/html
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+    mode: 755
+ 
 hooks:
   AfterInstall:
     - location: scripts/install.sh
       timeout: 300
       runas: ubuntu
-
+ 
   ApplicationStart:
     - location: scripts/start.sh
       timeout: 300
