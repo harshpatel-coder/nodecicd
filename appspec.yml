@@ -1,18 +1,19 @@
-version: 0.2
+version: 0.0
+os: linux
 
-phases:
-  install:
-    runtime-versions:
-      nodejs: 18
-    commands:
-      - npm install
+files:
+  - source: /build
+    destination: /var/www/html
 
-  build:
-    commands:
-      - npm run build
+file_exists_behavior: OVERWRITE
 
-artifacts:
-  files:
-    - build/**/*
-    - appspec.yml
-    - scripts/**/*
+hooks:
+  AfterInstall:
+    - location: scripts/install.sh
+      timeout: 300
+      runas: ubuntu
+
+  ApplicationStart:
+    - location: scripts/start.sh
+      timeout: 300
+      runas: ubuntu
