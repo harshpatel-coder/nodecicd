@@ -1,26 +1,18 @@
-version: 0.0
-os: linux
+version: 0.2
 
-files:
-  - source: /
-    destination: /var/www/html/nodeapp
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - npm install
 
-file_exists_behavior: OVERWRITE
+  build:
+    commands:
+      - npm run build
 
-permissions:
-  - object: /var/www/html/nodeapp
-    pattern: "**"
-    owner: ubuntu
-    group: ubuntu
-    mode: 755
-
-hooks:
-  AfterInstall:
-    - location: scripts/install.sh
-      timeout: 300
-      runas: ubuntu
-
-  ApplicationStart:
-    - location: scripts/start.sh
-      timeout: 300
-      runas: ubuntu
+artifacts:
+  files:
+    - build/**/*
+    - appspec.yml
+    - scripts/**/*
